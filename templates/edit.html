@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if watchlist|length > 0 %}
+
+  <div class="container-fluid">
+    <h2>My Watchlist</h2>
+    <ul>
+      {% for movie in watchlist: %}
+        <li>
+          <form action="/crossoff" method="post">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">{{ movie.name }}</div>
+                <input type="hidden" name="crossed-off-movie" value="{{ movie.id }}"/>
+                <div class="col-md-6"></div><input type="submit" class="btn btn-default" value="I Watched it!"/></div>
+              </div>
+            </div>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<div class="container-fluid">
+  <h2>Edit My Watchlist</h2>
+
+  <form action="/add" method="post">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-8">
+          <label>
+            I want to add
+            <input type="text" class="form-control" name="new-movie"/>
+            to my watchlist.
+          </label>
+        </div>
+          <div class="col-md-4">
+          <input type="submit" class="btn btn-default" value="Add It"/>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% if error %}
+  <div class='alert alert-primary'>{{ error }}</div>
+{% endif %}
+{% endblock %}
